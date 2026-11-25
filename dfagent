@@ -1,0 +1,8 @@
+#!/bin/sh
+# dfagent launcher: uses the local virtualenv when present.
+HERE=$(dirname "$(readlink -f "$0")")
+export DFHACK_PORT="${DFHACK_PORT:-5001}"
+if [ -x "$HERE/.venv/bin/python" ]; then
+    exec "$HERE/.venv/bin/python" "$HERE/dfagent.py" "$@"
+fi
+exec python3 "$HERE/dfagent.py" "$@"
