@@ -2,6 +2,7 @@
 # dfkit launcher: uses the local virtualenv when present.
 HERE=$(dirname "$(dirname "$(readlink -f "$0")")")
 export DFHACK_PORT="${DFHACK_PORT:-5001}"
+export PYTHONPATH="$HERE${PYTHONPATH:+:$PYTHONPATH}"
 if [ -x "$HERE/.venv/bin/python" ]; then
     exec "$HERE/.venv/bin/python" -m dfkit.cli "$@"
 fi

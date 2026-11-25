@@ -171,7 +171,15 @@ def main(argv=None):
     p.add_argument("--priority", type=int, default=5)
 
     args = parser.parse_args(argv)
-    client = connect(args)
+    if args.command == "actions":
+        cmd_actions(None, args)
+        return 0
+    try:
+        client = connect(args)
+    except OSError as exc:
+        print(f"cannot reach DFHack RPC on 127.0.0.1:{args.port} ({exc})",
+              file=sys.stderr)
+        return 3
     model = WorldModel(client)
     handler = {
         "state": cmd_state, "snapshot": cmd_snapshot, "actions": cmd_actions,
